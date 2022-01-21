@@ -10,17 +10,22 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkUtils {
-    final static String GITHUB_BASE_URL = "https://api.github.com/search/repositories";
-    //final static String GITHUB_BASE_URL = "https://akabab.github.io/superhero-api/api";
-    final static String QUERY_PARAM = "q";
-    final static String SORT_PARAM = "sort";
-    final static String SORT_BY = "starts";
+    final static String GITHUB_BASE_URL = "https://swapi.dev/api/planets";
+    final static String QUERY_FORMAT = "/?format=json";
+
 
     public static URL buildUrl(String githubSearchQuery) {
-        Uri buildUri = Uri.parse( GITHUB_BASE_URL).buildUpon()
-                                .appendQueryParameter(QUERY_PARAM, githubSearchQuery)
-                                .appendQueryParameter(SORT_PARAM, SORT_BY)
-                                .build();
+        Uri buildUri = null;
+        if (!githubSearchQuery.isEmpty()) {
+            buildUri = Uri.parse( GITHUB_BASE_URL).buildUpon()
+                    .appendPath(githubSearchQuery + QUERY_FORMAT)
+                    .build();
+        } else {
+            buildUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+                    .appendPath(QUERY_FORMAT)
+                    .build();
+        }
+
         URL url = null;
 
         try {

@@ -17,24 +17,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.githubhunter.entities.RepoEntity;
-import com.example.githubhunter.recyclerview.RepoAdapter;
+import com.example.githubhunter.entities.PlanetEntity;
+import com.example.githubhunter.recyclerview.PlanetAdapter;
 import com.example.githubhunter.utils.NetworkUtils;
-import com.example.githubhunter.utils.RepoJsonUtils;
+import com.example.githubhunter.utils.PlanetJsonUtils;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class MainActivity extends AppCompatActivity implements RepoAdapter.ListItemClickListener {
+public class MainActivity extends AppCompatActivity implements PlanetAdapter.ListItemClickListener {
     EditText searchBox;
     TextView urlDisplay;
     TextView searchResults;
     TextView errorMsgDisplay;
     ProgressBar request_progress;
-    RecyclerView repoList;
-    RepoAdapter adapter;
+    RecyclerView planetList;
+    PlanetAdapter adapter;
     Toast clickToast;
 
     @Override
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements RepoAdapter.ListI
         clickToast.show();
     }
 
-    public class gitHubQueryTask extends AsyncTask<URL, Void, String>{
+    public class starsWarsQueryTask extends AsyncTask<URL, Void, String>{
 
         @Override
         protected void onPreExecute() {
@@ -58,16 +58,14 @@ public class MainActivity extends AppCompatActivity implements RepoAdapter.ListI
         @Override
         protected String doInBackground(URL... urls) {
             URL searchUrl = urls[0];
-            String gitHubSearchResults = null;
+            String apiSearchResults = null;
 
             try {
-                Log.d("Juan", "Número de registros haciendo llamada");
-                gitHubSearchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
-                Log.d("Juan", "salida");
+                apiSearchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return gitHubSearchResults;
+            return apiSearchResults;
         }
 
         @Override
@@ -75,16 +73,12 @@ public class MainActivity extends AppCompatActivity implements RepoAdapter.ListI
             request_progress.setVisibility(View.INVISIBLE);
             if (s != null && !s.equals("")) {
                 try {
-                    RepoEntity[] parsedApiOutput = RepoJsonUtils.parseRepoFromJson(s);
-                    Log.d("Juan", "Número de registros " + parsedApiOutput.length);
+                    PlanetEntity[] parsedApiOutput = PlanetJsonUtils.parseRepoFromJson(s);
                     adapter.setRepoData(parsedApiOutput);
-//                    Log.d("JUAN", parsedApiOutput[0]);
-//                    Log.d("JUAN", parsedApiOutput[1]);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 showJsonData();
-//                searchResults.setText(s);
             } else {
                 showErrorMsg();
             }
@@ -108,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements RepoAdapter.ListI
             URL githubUrl = NetworkUtils.buildUrl(searchBox.getText().toString());
             urlDisplay.setText(githubUrl.toString());
 
-            new gitHubQueryTask().execute(githubUrl);
+            new starsWarsQueryTask().execute(githubUrl);
         }
         return true;
     }
@@ -132,16 +126,16 @@ public class MainActivity extends AppCompatActivity implements RepoAdapter.ListI
         urlDisplay = (TextView) findViewById(R.id.url_display);
 //        searchResults = (TextView) findViewById(R.id.github_search_results);
         errorMsgDisplay = (TextView) findViewById(R.id.error_message_display);
-        repoList = (RecyclerView) findViewById(R.id.rv_response);
+        planetList = (RecyclerView) findViewById(R.id.rv_response);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         request_progress = (ProgressBar) findViewById(R.id.request_progress);
 
-        repoList.setLayoutManager(layoutManager);
+        planetList.setLayoutManager(layoutManager);
 
-        repoList.setHasFixedSize(true);
+        planetList.setHasFixedSize(true);
 
-        adapter = new RepoAdapter(this);
-        repoList.setAdapter(adapter);
+        adapter = new PlanetAdapter(this);
+        planetList.setAdapter(adapter);
     }
 }

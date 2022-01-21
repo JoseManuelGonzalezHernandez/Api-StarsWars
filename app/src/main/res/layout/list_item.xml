@@ -10,23 +10,23 @@
         android:layout_height="wrap_content"
         android:layout_weight="2">
         <TextView
-            android:id="@+id/repo_name"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Here goes the repo name"
+            android:text="Here goes the planet name"
             android:textSize="18sp"/>
         <TextView
-            android:id="@+id/repo_comment"
+            android:id="@+id/gravity"
             android:layout_width="wrap_content"
             android:layout_height="19dp"
-            android:text="Here goes other text"
+            android:text="Here goes the gravity"
             android:textSize="12sp"/>
     </LinearLayout>
     b<TextView
-        android:id="@+id/repo_stars"
+        android:id="@+id/terrain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="stars"
+        android:text="Here goes the terrain"
         android:layout_weight="1"/>
 
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.example.githubhunter.recyclerview;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.githubhunter.R;
-import com.example.githubhunter.entities.RepoEntity;
+import com.example.githubhunter.entities.PlanetEntity;
 
-import org.w3c.dom.Text;
-
-public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder>{
-    private static final String TAG = RepoAdapter.class.getSimpleName();
+public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>{
+    private static final String TAG = PlanetAdapter.class.getSimpleName();
     private final ListItemClickListener onClickListener;
 
-    public RepoEntity[] repoData;
+    public PlanetEntity[] repoData;
 
     public interface ListItemClickListener {
         void onListItemClick(int clickedItemindex);
     }
 
-    public RepoAdapter(ListItemClickListener clickListener) {
+    public PlanetAdapter(ListItemClickListener clickListener) {
         this.onClickListener = clickListener;
     }
 
@@ -36,49 +33,49 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
         return repoData.length;
     }
 
-    public void setRepoData(RepoEntity[] repositories) {
+    public void setRepoData(PlanetEntity[] repositories) {
         repoData = repositories;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public RepoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlanetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         int layoutIdForItem = R.layout.list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentInmediately = false;
 
         View view = inflater.inflate(layoutIdForItem, parent,shouldAttachToParentInmediately);
-        RepoViewHolder viewHolder = new RepoViewHolder(view);
+        PlanetViewHolder viewHolder = new PlanetViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RepoViewHolder holder, int position) {
-        RepoEntity repo = repoData[position];
+    public void onBindViewHolder(@NonNull PlanetViewHolder holder, int position) {
+        PlanetEntity repo = repoData[position];
 
         holder.bind(repo);
     }
 
 
-    class RepoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView repoName;
-        TextView repoComment;
-        TextView repoStars;
+    class PlanetViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView name;
+        TextView gravity;
+        TextView terrain;
 
-        public RepoViewHolder(@NonNull View itemView) {
+        public PlanetViewHolder(@NonNull View itemView) {
             super(itemView);
-            repoName = (TextView) itemView.findViewById(R.id.repo_name);
-            repoComment = (TextView) itemView.findViewById(R.id.repo_comment);
-            repoStars = (TextView) itemView.findViewById(R.id.repo_stars);
+            name = (TextView) itemView.findViewById(R.id.name);
+            gravity = (TextView) itemView.findViewById(R.id.gravity);
+            terrain = (TextView) itemView.findViewById(R.id.terrain);
             itemView.setOnClickListener(this);
         }
 
-        void bind(RepoEntity repository) {
-            repoName.setText(repository.fullName);
-            repoComment.setText(repository.description);
-            repoStars.setText(repository.stars);
+        void bind(PlanetEntity planet) {
+            name.setText(planet.name);
+            gravity.setText(planet.gravity);
+            terrain.setText(planet.terrain);
         }
 
         @Override
