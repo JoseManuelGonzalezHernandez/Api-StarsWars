@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">GitHubHunter</string>
+    <string name="search">Search</string>
+    <string name="seach_pressed">Search_Pressed</string>
+    <string name="error_message"> Se ha producido un error, vuelve a intentarlo mas tarde bro</string>
+</resources>
