@@ -1,6 +1,7 @@
 package com.example.githubhunter.utils;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,19 +11,21 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkUtils {
-    final static String GITHUB_BASE_URL = "https://swapi.dev/api/planets";
-    final static String QUERY_FORMAT = "/?format=json";
+    final static String API_BASE_URL = "https://swapi.dev/api/planets/";
+    final static String QUERY_PARAM = "format";
+    final static String QUERY_FORMAT = "json";
 
 
     public static URL buildUrl(String githubSearchQuery) {
         Uri buildUri = null;
         if (!githubSearchQuery.isEmpty()) {
-            buildUri = Uri.parse( GITHUB_BASE_URL).buildUpon()
-                    .appendPath(githubSearchQuery + QUERY_FORMAT)
+            buildUri = Uri.parse(API_BASE_URL).buildUpon()
+                    .appendEncodedPath(githubSearchQuery + "/")
+                    .appendQueryParameter(QUERY_PARAM, QUERY_FORMAT)
                     .build();
         } else {
-            buildUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
-                    .appendPath(QUERY_FORMAT)
+            buildUri = Uri.parse(API_BASE_URL).buildUpon()
+                    .appendQueryParameter(QUERY_PARAM, QUERY_FORMAT)
                     .build();
         }
 
@@ -30,6 +33,7 @@ public class NetworkUtils {
 
         try {
             url = new URL(buildUri.toString());
+            Log.i("Juan", url.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

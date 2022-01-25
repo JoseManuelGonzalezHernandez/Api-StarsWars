@@ -1,6 +1,7 @@
 package com.example.githubhunter.recyclerview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
         Context context = parent.getContext();
         int layoutIdForItem = R.layout.list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
-        boolean shouldAttachToParentInmediately = false;
+        boolean shouldAttachToParentInmediately = true;
 
         View view = inflater.inflate(layoutIdForItem, parent,shouldAttachToParentInmediately);
         PlanetViewHolder viewHolder = new PlanetViewHolder(view);
@@ -54,7 +55,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
     @Override
     public void onBindViewHolder(@NonNull PlanetViewHolder holder, int position) {
         PlanetEntity repo = repoData[position];
-
+        Log.i("Juan", "Binding position" + position);
         holder.bind(repo);
     }
 

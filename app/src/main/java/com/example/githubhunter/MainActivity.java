@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements PlanetAdapter.Lis
         @Override
         protected void onPostExecute(String s) {
             request_progress.setVisibility(View.INVISIBLE);
-            if (s != null && !s.equals("")) {
+            Log.i("Juan", s);
+            if (s != null) {
                 try {
                     PlanetEntity[] parsedApiOutput = PlanetJsonUtils.parseRepoFromJson(s);
                     adapter.setRepoData(parsedApiOutput);
