@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements PlanetAdapter.Lis
             Toast.makeText(context, R.string.seach_pressed, Toast.LENGTH_LONG).show();
             URL githubUrl = NetworkUtils.buildUrl(searchBox.getText().toString());
             urlDisplay.setText(githubUrl.toString());
+            Log.i("Juan", "xd" + githubUrl.toString());
 
             new starsWarsQueryTask().execute(githubUrl);
         }
