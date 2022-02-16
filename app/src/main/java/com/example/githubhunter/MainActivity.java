@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements PlanetAdapter.Lis
         @Override
         protected void onPostExecute(String s) {
             request_progress.setVisibility(View.INVISIBLE);
-            Log.i("Juan", s);
             if (s != null) {
                 try {
                     PlanetEntity[] parsedApiOutput = PlanetJsonUtils.parseRepoFromJson(s);
@@ -102,9 +101,12 @@ public class MainActivity extends AppCompatActivity implements PlanetAdapter.Lis
             Toast.makeText(context, R.string.seach_pressed, Toast.LENGTH_LONG).show();
             URL githubUrl = NetworkUtils.buildUrl(searchBox.getText().toString());
             urlDisplay.setText(githubUrl.toString());
-            Log.i("Juan", "xd" + githubUrl.toString());
 
             new starsWarsQueryTask().execute(githubUrl);
+        } else {
+            Log.i("MainActivity", "El usuario ha pulsado clear");
+            adapter = new PlanetAdapter(this);
+            planetList.setAdapter(adapter);
         }
         return true;
     }

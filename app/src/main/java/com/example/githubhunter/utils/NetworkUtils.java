@@ -20,7 +20,7 @@ public class NetworkUtils {
         Uri buildUri = null;
         if (!githubSearchQuery.isEmpty()) {
             buildUri = Uri.parse(API_BASE_URL).buildUpon()
-                    .appendEncodedPath(githubSearchQuery + "/")
+                    .appendPath("/" + githubSearchQuery + "/")
                     .appendQueryParameter(QUERY_PARAM, QUERY_FORMAT)
                     .build();
         } else {
@@ -33,7 +33,6 @@ public class NetworkUtils {
 
         try {
             url = new URL(buildUri.toString());
-            Log.i("Juan", url.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -16,27 +16,38 @@ public final class PlanetJsonUtils {
         final String PLANET_TERRAIN = "terrain";
 
         JSONObject planetsJSON = new JSONObject(planetJsonString);
+        JSONArray planetsList = null;
+        PlanetEntity[] parsedPlanetList;
 
+        if (planetJsonString.startsWith("{\"count\":")) {
+            planetsList = planetsJSON.getJSONArray(PLANET_LIST);
 
-        JSONArray planetsList = planetsJSON.getJSONArray(PLANET_LIST);
+            parsedPlanetList = new PlanetEntity[planetsList.length()];
 
-        Log.i("Juan", String.valueOf(planetsList.length()));
+            for (int i = 0; i < planetsList.length(); i++) {
+                JSONObject parsedPlanet = planetsList.getJSONObject(i);
 
+                String name = parsedPlanet.getString(PLANET_NAME);
+                String terrain = parsedPlanet.getString(PLANET_TERRAIN);
+                String gravity = parsedPlanet.getString(PLANET_GRAVITY);
+                PlanetEntity repo = new PlanetEntity(name, gravity, terrain);
 
-
-
-        PlanetEntity[] parsedPlanetList = new PlanetEntity[planetsList.length()];
-
-        for (int i = 0; i < planetsList.length(); i++) {
-            JSONObject parsedPlanet = planetsList.getJSONObject(i);
+                parsedPlanetList[i] = repo;
+            }
+        } else {
+            JSONObject parsedPlanet = new JSONObject(planetJsonString);
+            parsedPlanetList = new PlanetEntity[1];
 
             String name = parsedPlanet.getString(PLANET_NAME);
             String terrain = parsedPlanet.getString(PLANET_TERRAIN);
             String gravity = parsedPlanet.getString(PLANET_GRAVITY);
             PlanetEntity repo = new PlanetEntity(name, gravity, terrain);
 
-            parsedPlanetList[i] = repo;
+            parsedPlanetList[0] = repo;
         }
+
+
+
         return parsedPlanetList;
     }
 }
